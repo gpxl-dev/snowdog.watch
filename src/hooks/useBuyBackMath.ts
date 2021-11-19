@@ -162,6 +162,18 @@ const useBuybackMath = () => {
         payload: { symbol: TREASURY_TOKENS.weth, price: wethPriceInMim },
       });
     });
+
+    Promise.all([
+      getTokenPrice(TREASURY_TOKENS.joe, provider),
+      avaxTokenPromise!,
+    ]).then(([avaxPriceInJoe, avaxPriceInMim]) => {
+      const joePriceInAvax = new BigNumber(1).dividedBy(avaxPriceInJoe);
+      const joePriceInMim = joePriceInAvax.multipliedBy(avaxPriceInMim);
+      dispatch({
+        type: "setTokenPriceInMim",
+        payload: { symbol: TREASURY_TOKENS.joe, price: joePriceInMim },
+      });
+    });
   }, []);
 
   const treasuryTotal = useMemo(() => {

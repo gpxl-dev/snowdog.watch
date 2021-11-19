@@ -23,7 +23,7 @@ const treasuryTokenAddresses: Record<TREASURY_TOKENS, string> = {
 
 const treasuryTokenLPAddresses: Record<TREASURY_TOKENS, string | null> = {
   avax: "0x781655d802670bbA3c89aeBaaEa59D3182fD755D", // mim / avax
-  joe: "0x5a1dC690dFEeffBE7d92824C06eE2eF6a183Cd98", // mim / joe
+  joe: "0x454e67025631c065d3cfad6d71e6892f74487a15", // joe / avax
   spell: "0x62cf16bf2bc053e7102e2ac1dee5029b94008d99", // avax / spell
   mim: null,
   weth: "0xfe15c2695f1f920da45c30aae47d11de51007af9", // weth / avax
@@ -31,7 +31,6 @@ const treasuryTokenLPAddresses: Record<TREASURY_TOKENS, string | null> = {
 
 export const mimTokenPools: TREASURY_TOKENS[] = [
   TREASURY_TOKENS.avax,
-  TREASURY_TOKENS.joe,
   TREASURY_TOKENS.mim,
 ];
 
