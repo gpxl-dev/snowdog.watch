@@ -35,7 +35,7 @@ const App: React.FC = () => {
   const state = useBuybackMath();
 
   return (
-    <div className="text-offBlack flex flex-col p-4 gap-3">
+    <div className="text-offBlack flex flex-col p-4 gap-3 max-w-xl mx-auto">
       <header className="flex flex-row items-center my-5 self-center">
         <img src={sdogLogo} className="px-2" />
         <h1 className="font-semibold text-2xl mx-3">$SDOG Calculator</h1>
@@ -126,10 +126,24 @@ const App: React.FC = () => {
       <Card className="overflow-hidden">
         <h2 className="text-xl font-bold mb-4">Honestly, SB good project</h2>
         <p className="text-darkGrey text-base mb-6 leading-relaxed">
-          Calculator made with love by @greypixel &amp; @japlet - buy us a beer
-          if you'd like:
+          Calculator made with ❤️ by{" "}
+          <a
+            href="https://twitter.com/greypixel_"
+            target="_blank"
+            className="underline"
+          >
+            @greypixel_
+          </a>{" "}
+          &amp;{" "}
+          <a href="https://twitter.com/japlito" className="underline">
+            @japlet
+          </a>
+          - buy us a beer if you'd like:
         </p>
-        <Card internal className="flex flex-row p-3 gap-2">
+        <Card
+          internal
+          className="flex flex-row p-3 gap-2 items-center justify-between"
+        >
           <span className="text-darkGrey text-sm break-words overflow-hidden">
             0x0838FeF78Ea34Ff8654669281a2e8D1D96A6eE35
           </span>
@@ -144,6 +158,13 @@ const App: React.FC = () => {
         </Card>
         <img src={sbPepe} className="ml-auto mt-10 -mr-6 -mb-8" />
       </Card>
+      <div className="text-sm text-darkGrey mt-5">
+        Disclaimer: Honestly, SB good project, but we're not affiliated in any
+        way with Snowdog or Snowbank. We've never even spoken to the regional
+        manager, let alone the big dog. Everything on this site is potentially
+        completely wrong, and you should by no means use it as any sort of price
+        guarantee or promise. Thx.
+      </div>
     </div>
   );
 };
