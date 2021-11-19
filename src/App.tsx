@@ -1,16 +1,6 @@
 import { BigNumber } from "bignumber.js";
-import React, { useEffect, useReducer, Fragment } from "react";
-import {
-  getProvider,
-  getSdogMimReserves,
-  getTokensOutGivenTokensIn,
-} from "./api/traderJoe";
-import {
-  getTokenPrice,
-  getTreasuryTokenBalance,
-  mimTokenPools,
-  TREASURY_TOKENS,
-} from "./api/treasury";
+import React, { Fragment } from "react";
+import { TREASURY_TOKENS } from "./api/treasury";
 import useBuybackMath from "./hooks/useBuyBackMath";
 
 // Never use exponential notation when toStringing bignumbers.
