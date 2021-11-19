@@ -136,7 +136,7 @@ const App: React.FC = () => {
           </a>{" "}
           &amp;{" "}
           <a href="https://twitter.com/japlito" className="underline">
-            @japlet
+            @japlito
           </a>
           - buy us a beer if you'd like:
         </p>
