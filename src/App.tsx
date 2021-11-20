@@ -80,9 +80,12 @@ const App: React.FC = () => {
         </div>
       </Card>
 
-      <Card className="area-treasury">
+      <Card className="area-treasury flex flex-col">
         <h2 className="text-xl font-bold mb-4">Treasury info</h2>
-        <p className="text-darkGrey text-base mb-6 leading-relaxed">
+        <p
+          className="text-darkGrey text-base mb-6 leading-relaxed"
+          style={{ flexGrow: 2 }}
+        >
           Current treasury assets excluding MIM-SDOG LP
         </p>
         {Object.keys(TREASURY_TOKENS).map((key) => {
@@ -114,7 +117,7 @@ const App: React.FC = () => {
             />
           );
         })}
-        <div className="w-100 border-b border-lightGrey my-6"></div>
+        <div className="w-100 border-b border-lightGrey mt-4 mb-6 flex-1"></div>
         <div className="flex flex-row text-xl justify-between">
           <span className="font-bold">Total</span>
           <span className="font-semibold text-valueGreen">

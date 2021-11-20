@@ -14,7 +14,9 @@ const TreasuryAsset: FC<{
       </div>
       <span className="text-darkGrey justify-end text-right">{amount}</span>
       <span>&nbsp;</span>
-      <span className="text-valueGreen font-semibold text-right">{value}</span>
+      <span className="text-valueGreen font-semibold text-right relative -top-2">
+        {value}
+      </span>
     </div>
   );
 };
