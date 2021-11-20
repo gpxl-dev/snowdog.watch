@@ -10,6 +10,8 @@
       "treasury buybackImpact"
       "footer footer"
       "disclaimer disclaimer";
+
+    grid-template-columns: 3fr 2fr;
   }
   .area-header {
     grid-area: header;
