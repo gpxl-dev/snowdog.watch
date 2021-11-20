@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .gridContainer {
+    grid-template-areas:
+      "header header"
+      "treasury currentPrice"
+      "treasury buybackImpact"
+      "footer footer"
+      "disclaimer disclaimer";
+  }
+  .area-header {
+    grid-area: header;
+  }
+  .area-currentPrice {
+    grid-area: currentPrice;
+  }
+  .area-treasury {
+    grid-area: treasury;
+  }
+  .area-buybackImpact {
+    grid-area: buybackImpact;
+  }
+  .area-footer {
+    grid-area: footer;
+  }
+  .area-disclaimer {
+    grid-area: disclaimer;
+  }
+}

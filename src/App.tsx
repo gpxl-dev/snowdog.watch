@@ -35,12 +35,12 @@ const App: React.FC = () => {
   const state = useBuybackMath();
 
   return (
-    <div className="text-offBlack flex flex-col p-4 gap-3 max-w-xl mx-auto">
-      <header className="flex flex-row items-center my-5 self-center">
+    <div className="flex flex-col md:grid gap-3 max-w-4xl mx-auto p-4 text-offBlack gridContainer">
+      <header className="atea-header flex flex-row items-center my-5 self-center">
         <img src={sdogLogo} className="px-2" />
         <h1 className="font-semibold text-2xl mx-3">$SDOG Calculator</h1>
       </header>
-      <Card>
+      <Card className="area-currentPrice">
         <h2 className="text-xl font-bold mb-4">Current $SDOG price</h2>
         <Card internal>
           <LogoAndText
@@ -50,7 +50,7 @@ const App: React.FC = () => {
         </Card>
       </Card>
 
-      <Card>
+      <Card className="area-buybackImpact">
         <h2 className="text-xl font-bold mb-4">Buyback Impact</h2>
         <p className="text-darkGrey text-base mb-6 leading-relaxed">
           Number of tokens bought and burned if the buyback happened now, and
@@ -80,7 +80,7 @@ const App: React.FC = () => {
         </div>
       </Card>
 
-      <Card>
+      <Card className="area-treasury">
         <h2 className="text-xl font-bold mb-4">Treasury info</h2>
         <p className="text-darkGrey text-base mb-6 leading-relaxed">
           Current treasury assets excluding MIM-SDOG LP
@@ -123,42 +123,46 @@ const App: React.FC = () => {
         </div>
       </Card>
 
-      <Card className="overflow-hidden">
-        <h2 className="text-xl font-bold mb-4">Honestly, SB good project</h2>
-        <p className="text-darkGrey text-base mb-6 leading-relaxed">
-          Calculator made with ❤️ by{" "}
-          <a
-            href="https://twitter.com/greypixel_"
-            target="_blank"
-            className="underline"
+      <Card className="area-footer flex flex-col md:flex-row overflow-hidden">
+        <div className="flex flex-col">
+          <h2 className="text-xl font-bold mb-4">Honestly, SB good project</h2>
+          <p className="text-darkGrey text-base mb-6 leading-relaxed">
+            Calculator made with ❤️ by{" "}
+            <a
+              href="https://twitter.com/greypixel_"
+              target="_blank"
+              className="underline"
+            >
+              @greypixel_
+            </a>{" "}
+            &amp;{" "}
+            <a href="https://twitter.com/japlito" className="underline">
+              @japlito
+            </a>
+            &nbsp;- buy us a beer if you'd like:
+          </p>
+          <Card
+            internal
+            className="flex flex-row !px-3 !py-1 gap-2 items-center justify-between"
           >
-            @greypixel_
-          </a>{" "}
-          &amp;{" "}
-          <a href="https://twitter.com/japlito" className="underline">
-            @japlito
-          </a>
-          &nbsp;- buy us a beer if you'd like:
-        </p>
-        <Card
-          internal
-          className="flex flex-row p-3 gap-2 items-center justify-between"
-        >
-          <span className="text-darkGrey text-sm break-words overflow-hidden">
-            0x0838FeF78Ea34Ff8654669281a2e8D1D96A6eE35
-          </span>
-          <button
-            className="p-4"
-            onClick={() => {
-              copyTextToClipboard("0x0838FeF78Ea34Ff8654669281a2e8D1D96A6eE35");
-            }}
-          >
-            <img src={copyIcon} className="w-5" />
-          </button>
-        </Card>
-        <img src={sbPepe} className="ml-auto mt-10 -mr-6 -mb-8" />
+            <span className="text-darkGrey text-sm break-words overflow-hidden">
+              0x0838FeF78Ea34Ff8654669281a2e8D1D96A6eE35
+            </span>
+            <button
+              className="p-4"
+              onClick={() => {
+                copyTextToClipboard(
+                  "0x0838FeF78Ea34Ff8654669281a2e8D1D96A6eE35"
+                );
+              }}
+            >
+              <img src={copyIcon} className="w-5" />
+            </button>
+          </Card>
+        </div>
+        <img src={sbPepe} className="ml-auto mt-10 -mr-6 -mb-8 md:-mb-12" />
       </Card>
-      <div className="text-sm text-darkGrey mt-5">
+      <div className="area-disclaimer text-sm text-darkGrey mt-5">
         Disclaimer: Honestly, SB good project, but we're not affiliated in any
         way with Snowdog or Snowbank. We've never even spoken to the regional
         manager, let alone the big dog. Everything on this site is potentially
