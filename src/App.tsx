@@ -65,7 +65,7 @@ const App: React.FC = () => {
             <input
               value={scenario.priceIncrease}
               onChange={(e) => scenario.setPriceIncrease(e.target.value)}
-              step="1"
+              step="0.5"
               type="number"
               className="inlineInput"
             />
@@ -89,9 +89,19 @@ const App: React.FC = () => {
         <p className="text-darkGrey text-base mb-6 leading-relaxed">
           {simulationMode ? (
             <span>
-              Number of tokens bought and burned in a buyback with the simulated
-              parameters, and the resultant <b>instantaneous</b> spot price of
-              Snowdog:
+              Number of tokens bought and burned in the first of{" "}
+              <input
+                value={scenario.numBuybacks}
+                onChange={(e) => scenario.setNumBuybacks(e.target.value)}
+                step="1"
+                type="number"
+                className="inlineInput border-b border-sdogBlue text-sdogBlue"
+              />{" "}
+              <span className="text-sdogBlue">
+                {parseInt(scenario.numBuybacks) == 1 ? "buyback" : "buybacks"}{" "}
+              </span>
+              with the simulated parameters, and the resultant{" "}
+              <b>instantaneous</b> spot price of Snowdog:
             </span>
           ) : (
             <span>
@@ -175,7 +185,7 @@ const App: React.FC = () => {
               onChange={(e) =>
                 scenario.setTreasuryValueIncrease(e.target.value)
               }
-              step="1"
+              step="0.5"
               type="number"
               className="inlineInput"
             />
@@ -242,7 +252,7 @@ const App: React.FC = () => {
               <input
                 value={scenario.lpSizeIncrease}
                 onChange={(e) => scenario.setLpSizeIncrease(e.target.value)}
-                step="1"
+                step="0.5"
                 type="number"
                 className="inlineInput"
               />
