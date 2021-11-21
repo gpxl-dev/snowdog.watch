@@ -15,6 +15,7 @@ module.exports = {
         lightGrey: "#C8CDDD",
         darkGrey: "#7F8598",
         valueGreen: "#00D047",
+        sdogBlue: "#2151f5",
       },
     },
   },

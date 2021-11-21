@@ -12,7 +12,7 @@ import {
   TREASURY_TOKENS,
 } from "../api/treasury";
 
-type BuyBackInfo = {
+export type BuyBackInfo = {
   reserves: {
     [pair: string]: [BigNumber, BigNumber] | null;
   };

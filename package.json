@@ -7,11 +7,14 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.2",
+    "add": "^2.0.6",
     "bignumber.js": "^9.0.1",
     "classnames": "^2.3.1",
     "ethers": "^5.5.1",
     "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react-dom": "^17.0.0",
+    "yarn": "^1.22.17"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",

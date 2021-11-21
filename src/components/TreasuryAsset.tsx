@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { FC, ReactNode } from "react";
 
 const TreasuryAsset: FC<{
@@ -5,9 +6,15 @@ const TreasuryAsset: FC<{
   symbol: ReactNode;
   amount: ReactNode;
   value: ReactNode;
-}> = ({ logo, symbol, amount, value }) => {
+  className?: string;
+}> = ({ logo, symbol, amount, value, className }) => {
   return (
-    <div className="grid grid-cols-2 grid-rows-2 text-base">
+    <div
+      className={classNames(
+        "grid grid-cols-2 grid-rows-2 text-base",
+        className
+      )}
+    >
       <div className="flex flex-row items-center gap-3">
         <img src={logo} className="w-8 h-8" />
         <h4 className="font-semibold text-black">{symbol}</h4>

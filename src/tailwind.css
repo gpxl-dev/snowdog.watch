@@ -2,12 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+  }
+}
+
 @layer components {
   .gridContainer {
     grid-template-areas:
       "header header"
       "treasury currentPrice"
       "treasury buybackImpact"
+      "liquidity buybackImpact"
       "footer footer"
       "disclaimer disclaimer";
 
@@ -30,5 +44,12 @@
   }
   .area-disclaimer {
     grid-area: disclaimer;
+  }
+  .area-liquidity {
+    grid-area: liquidity;
+  }
+
+  .inlineInput {
+    @apply inline p-0 ml-2 w-10 border-b border-b-darkGrey text-center;
   }
 }

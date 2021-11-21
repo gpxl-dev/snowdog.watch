@@ -1,5 +1,5 @@
 import { BigNumber } from "bignumber.js";
-import React, { Fragment } from "react";
+import React, { useState } from "react";
 import { TREASURY_TOKENS } from "./api/treasury";
 import Card from "./components/Card";
 import LogoAndText from "./components/LogoAndText";
@@ -19,6 +19,9 @@ import TreasuryAsset from "./components/TreasuryAsset";
 import DollarValue from "./components/DollarValue";
 import TokenUnitValue from "./components/TokenUnitValue";
 import { copyTextToClipboard } from "./utils/copyToClipboard";
+import useScenario from "./hooks/useScenario";
+import ToggleSwitch from "./components/ToggleSwitch";
+import classNames from "classnames";
 
 const logos: Record<TREASURY_TOKENS, string> = {
   avax: avaxLogo,
@@ -33,28 +36,70 @@ BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 
 const App: React.FC = () => {
   const state = useBuybackMath();
+  const scenario = useScenario(state, state.treasuryTotal);
+
+  const [simulationMode, setSimulationMode] = useState<boolean>(false);
 
   return (
     <div className="flex flex-col md:grid gap-3 max-w-4xl mx-auto p-4 text-offBlack gridContainer">
-      <header className="atea-header flex flex-row items-center my-5 self-center">
-        <img src={sdogLogo} className="px-2" />
-        <h1 className="font-semibold text-2xl mx-3">$SDOG Calculator</h1>
+      <header className="area-header flex flex-row items-center my-5 self-center justify-between">
+        <div className="flex flex-row items-center">
+          <img src={sdogLogo} className="px-2" />
+          <h1 className="font-semibold text-2xl mx-3">$SDOG Calculator</h1>
+        </div>
+        <div className="flex flex-row items-center">
+          <h1 className="font-light text-lg mx-3 uppercase">Simulation mode</h1>
+          <ToggleSwitch
+            setEnabled={setSimulationMode}
+            enabled={simulationMode}
+          />
+        </div>
       </header>
       <Card className="area-currentPrice">
-        <h2 className="text-xl font-bold mb-4">Current $SDOG price</h2>
+        <h2 className="text-xl font-bold mb-4">
+          {simulationMode ? "Simulated $SDOG price" : "Current $SDOG price"}
+        </h2>
+        {simulationMode && (
+          <p className="mb-2 text-sdogBlue">
+            $SDOG Increases
+            <input
+              value={scenario.priceIncrease}
+              onChange={(e) => scenario.setPriceIncrease(e.target.value)}
+              step="1"
+              type="number"
+              className="inlineInput"
+            />
+            % from current price to:
+          </p>
+        )}
         <Card internal>
           <LogoAndText
             logo={sdogLogo}
-            text={<DollarValue value={state.tokenPricesInMim.sdog} />}
+            text={<DollarValue value={scenario.sdogPrice} />}
           />
         </Card>
       </Card>
 
       <Card className="area-buybackImpact">
-        <h2 className="text-xl font-bold mb-4">Buyback Impact</h2>
+        <h2 className="text-xl font-bold mb-4">
+          {simulationMode
+            ? "Simulated buyback impact"
+            : "Theoretical buyback impact"}
+        </h2>
         <p className="text-darkGrey text-base mb-6 leading-relaxed">
-          Number of tokens bought and burned if the buyback happened now, and
-          the resultant spot price of SDOG:
+          {simulationMode ? (
+            <span>
+              Number of tokens bought and burned in a buyback with the simulated
+              parameters, and the resultant <b>instantaneous</b> spot price of
+              Snowdog:
+            </span>
+          ) : (
+            <span>
+              Number of tokens bought and burned if the buyback were to happen
+              now <b className="font-bold">as a single transaction</b>, and the
+              resultant <b>instantaneous</b> spot price of Snowdog:
+            </span>
+          )}
         </p>
         <div className="relative flex flex-col">
           <Card internal className="mb-2">
@@ -63,7 +108,7 @@ const App: React.FC = () => {
               text={
                 <TokenUnitValue
                   decimals={9}
-                  value={state.buybackResult?.burned || null}
+                  value={scenario.sdogBurned || null}
                 />
               }
             />
@@ -72,21 +117,21 @@ const App: React.FC = () => {
           <Card internal>
             <LogoAndText
               logo={sdogLogo}
-              text={
-                <DollarValue value={state.buybackResult?.priceAfter || null} />
-              }
+              text={<DollarValue value={scenario.postBuybackPrice || null} />}
             />
           </Card>
         </div>
       </Card>
 
       <Card className="area-treasury flex flex-col">
-        <h2 className="text-xl font-bold mb-4">Treasury info</h2>
+        <h2 className="text-xl font-bold mb-4">Buyback treasury info</h2>
         <p
           className="text-darkGrey text-base mb-6 leading-relaxed"
           style={{ flexGrow: 2 }}
         >
-          Current treasury assets excluding MIM-SDOG LP
+          {simulationMode
+            ? "Specific assets not used in simuation mode, only total value"
+            : "Current treasury assets excluding SDOG-MIM LP"}
         </p>
         {Object.keys(TREASURY_TOKENS).map((key) => {
           const symbol = key as TREASURY_TOKENS;
@@ -94,6 +139,9 @@ const App: React.FC = () => {
             state.treasuryBalances[symbol] && state.tokenPricesInMim[symbol];
           return (
             <TreasuryAsset
+              className={classNames("transition-opacity", {
+                "opacity-30": simulationMode,
+              })}
               key={symbol}
               amount={
                 <TokenUnitValue
@@ -118,11 +166,97 @@ const App: React.FC = () => {
           );
         })}
         <div className="w-100 border-b border-lightGrey mt-4 mb-6 flex-1"></div>
+        {simulationMode && (
+          <p className="mb-4 text-sdogBlue">
+            Value of the Snowdog treasury (excluding SD-MIM LP tokens) increases
+            by
+            <input
+              value={scenario.treasuryValueIncrease}
+              onChange={(e) =>
+                scenario.setTreasuryValueIncrease(e.target.value)
+              }
+              step="1"
+              type="number"
+              className="inlineInput"
+            />
+            % from its current value to:
+          </p>
+        )}
         <div className="flex flex-row text-xl justify-between">
           <span className="font-bold">Total</span>
           <span className="font-semibold text-valueGreen">
-            <DollarValue value={state.treasuryTotal} />
+            <DollarValue value={scenario.treasuryValue} />
           </span>
+        </div>
+        {simulationMode && (
+          <p className="mt-4 text-sdogBlue opacity-80 italic text-sm">
+            <b className="font-bold">NOTE:</b> Treasury value can only increase
+            significantly when minting is active. Changes after the minting
+            period could only occur as a result of tokens within the treasury
+            changing in $ value
+          </p>
+        )}
+      </Card>
+
+      <Card className="area-liquidity flex flex-col">
+        <h2 className="text-xl font-bold mb-4">
+          {simulationMode
+            ? "Simulated liquidity pool info"
+            : "Liquidity pool info"}
+        </h2>
+        <div className="flex flex-row justify-between items-center">
+          <div className="flex flex-1 flex-wrap flex-row gap-3 items-center">
+            <img src={sdogLogo} className="w-8 h-8" />
+            <h4 className="font-semibold text-black">
+              <TokenUnitValue
+                decimals={0}
+                renderDecimals={0}
+                value={
+                  scenario.sdogPrice && scenario.lpValueInMim
+                    ? scenario.lpValueInMim
+                        .dividedBy(10 ** 18)
+                        .dividedBy(2)
+                        .dividedBy(scenario.sdogPrice)
+                    : null
+                }
+              />
+            </h4>
+          </div>
+          <h4 className="font-semibold text-black"> = </h4>
+          <div className="flex flex-1 flex-wrap flex-row-reverse gap-3 items-center">
+            <img src={mimLogo} className="w-8 h-8" />
+            <h4 className="font-semibold text-black">
+              <TokenUnitValue
+                decimals={18}
+                renderDecimals={0}
+                value={scenario.lpValueInMim || null}
+              />
+            </h4>
+          </div>
+        </div>
+        <div className="w-100 border-b border-lightGrey mt-6 mb-4 flex-1" />
+        <div className="flex flex-col">
+          {simulationMode && (
+            <p className="mb-4 text-sdogBlue">
+              Total value of tokens in the SDOG-MIM liquidity pool increases by
+              <input
+                value={scenario.lpSizeIncrease}
+                onChange={(e) => scenario.setLpSizeIncrease(e.target.value)}
+                step="1"
+                type="number"
+                className="inlineInput"
+              />
+              % from its current value to:
+            </p>
+          )}
+          <div className="flex flex-row  text-lg justify-between">
+            <span className="font-bold">Total value</span>
+            <span className="font-semibold text-valueGreen">
+              <DollarValue
+                value={scenario.lpValueInMim.dividedBy(10 ** 18) || null}
+              />
+            </span>
+          </div>
         </div>
       </Card>
 
@@ -165,6 +299,51 @@ const App: React.FC = () => {
         </div>
         <img src={sbPepe} className="ml-auto mt-10 -mr-6 -mb-8 md:-mb-12" />
       </Card>
+      {/* <Card>
+        <label>
+          Price multiplier
+          <Card internal>
+            <input
+              type="text"
+              value={scenario.priceModifier}
+              onChange={(e) => scenario.setPriceModifier(e.target.value)}
+            />
+          </Card>
+        </label>
+        <label>
+          Treasury multiplier
+          <Card internal>
+            <input
+              type="text"
+              value={scenario.treasuryValueModifier}
+              onChange={(e) =>
+                scenario.setTreasuryValueModifier(e.target.value)
+              }
+            />
+          </Card>
+        </label>
+        <label>
+          LP size modifier
+          <Card internal>
+            <input
+              type="text"
+              value={scenario.lpSizeModifier}
+              onChange={(e) => scenario.setLpSizeModifier(e.target.value)}
+            />
+          </Card>
+        </label>
+        <label>
+          Buybacks
+          <Card internal>
+            <input
+              type="text"
+              value={scenario.numBuybacks}
+              onChange={(e) => scenario.setNumBuybacks(e.target.value)}
+            />
+          </Card>
+        </label>
+      </Card> */}
+
       <div className="area-disclaimer text-sm text-darkGrey mt-5">
         Disclaimer: Honestly, SB good project, but we're not affiliated in any
         way with Snowdog or Snowbank. We've never even spoken to the regional
