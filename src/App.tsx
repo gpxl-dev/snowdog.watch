@@ -118,7 +118,6 @@ const App: React.FC = () => {
                 the resultant <b>instantaneous</b> spot price of Snowdog:
               </span>
             )}
-            git
           </p>
           <div className="relative flex flex-col">
             <Card internal className="mb-2">
@@ -261,7 +260,7 @@ const App: React.FC = () => {
                 <TokenUnitValue
                   decimals={18}
                   renderDecimals={0}
-                  value={scenario.lpValueInMim || null}
+                  value={scenario.lpValueInMim.dividedBy(2) || null}
                 />
               </h4>
             </div>
