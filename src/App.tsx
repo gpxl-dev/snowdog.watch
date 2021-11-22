@@ -397,6 +397,7 @@ const App: React.FC = () => {
         treasuryValue={scenario.treasuryValue}
         liquidityValue={scenario.lpValueInMim.dividedBy(10 ** 18)}
         sdogPrice={scenario.sdogPrice || new BigNumber(0)}
+        finalValue={scenario.postBuybackPrice || new BigNumber(0)}
       />
     </>
   );

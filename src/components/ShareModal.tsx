@@ -3,6 +3,7 @@ import { Dialog } from "@headlessui/react";
 import { IoMdClose } from "react-icons/io";
 import { FiLink2 } from "react-icons/fi";
 import BigNumber from "bignumber.js";
+import { addCommas } from "../utils/addCommas";
 
 const ShareModal: FC<{
   isOpen: boolean;
@@ -14,6 +15,7 @@ const ShareModal: FC<{
   sdogPrice: BigNumber;
   treasuryValue: BigNumber;
   liquidityValue: BigNumber;
+  finalValue: BigNumber;
 }> = ({
   isOpen,
   setIsOpen,
@@ -24,6 +26,7 @@ const ShareModal: FC<{
   liquidityValue,
   sdogPrice,
   treasuryValue,
+  finalValue,
 }) => {
   const singleBuyback = numBuybacks === "1";
   return (
@@ -57,7 +60,9 @@ const ShareModal: FC<{
             would instantaneously increase the price of $SDOG in the SDOG-MIM
             pool to:
           </p>
-          <p className="self-center text-xl font-bold my-4">$43,234</p>
+          <p className="self-center text-xl font-bold my-4">
+            ${addCommas(finalValue.toFixed(2))}
+          </p>
           <button
             className="absolute top-3 right-3 text-lg"
             onClick={() => setIsOpen(false)}
