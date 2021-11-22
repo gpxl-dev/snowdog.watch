@@ -3,7 +3,11 @@ import { useState } from "react";
 import { getTokensOutGivenTokensIn } from "../api/traderJoe";
 import { BuyBackInfo } from "./useBuyBackMath";
 
-const useScenario = (state: BuyBackInfo, treasuryValue: BigNumber) => {
+const useScenario = (
+  state: BuyBackInfo,
+  treasuryValue: BigNumber,
+  enable: boolean
+) => {
   const [priceIncrease, setPriceIncrease] = useState<string>("0");
   const [treasuryValueIncrease, setTreasuryValueIncrease] =
     useState<string>("0");
@@ -17,7 +21,8 @@ const useScenario = (state: BuyBackInfo, treasuryValue: BigNumber) => {
   if (
     !state.tokenPricesInMim.sdog ||
     !state.reserves["sdog-mim"] ||
-    !treasuryValue
+    !treasuryValue ||
+    !enable
   )
     return {
       treasuryValue: treasuryValue,
