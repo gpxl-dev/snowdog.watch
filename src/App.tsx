@@ -60,9 +60,18 @@ const App: React.FC = () => {
           </div>
         </header>
         <Card className="area-currentPrice">
-          <h2 className="text-xl font-bold mb-4">
-            {simulationMode ? "Simulated $SDOG price" : "Current $SDOG price"}
-          </h2>
+          <div className="flex flex-row justify-between flex-wrap items-center mb-4">
+            <h2 className="text-xl font-bold">
+              {simulationMode ? "Simulated price" : "Current price"}
+            </h2>
+            <a
+              href="https://traderjoexyz.com/#/trade?inputCurrency=0x130966628846bfd36ff31a822705796e8cb8c18d&outputCurrency=0xdE9E52F1838951e4d2bb6C59723B003c353979b6"
+              className="md:hidden block bg-sdogBlue text-white px-2 py-1 rounded text-sm"
+              target="_blank"
+            >
+              Buy SDOG
+            </a>
+          </div>
           {simulationMode && (
             <p className="mb-2 text-sdogBlue">
               $SDOG Increases
@@ -144,7 +153,7 @@ const App: React.FC = () => {
           </div>
           <a
             href="https://traderjoexyz.com/#/trade?inputCurrency=0x130966628846bfd36ff31a822705796e8cb8c18d&outputCurrency=0xdE9E52F1838951e4d2bb6C59723B003c353979b6"
-            className="block w-full p-8 text-center text-xl font-bold text-white bg-sdogBlue rounded mt-8 active:bg-blue-800 transition-colors"
+            className="hidden md:block w-full p-8 text-center text-xl font-bold text-white bg-sdogBlue rounded mt-8 active:bg-blue-800 transition-colors"
             target="_blank"
           >
             Buy SDOG
