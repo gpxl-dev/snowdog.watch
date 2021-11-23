@@ -4,7 +4,7 @@ import joePairAbi from "../abis/joePair.json";
 
 const MIM_SDOG_LP_ADDR = "0xa3f1f5076499ec37d5bb095551f85ab5a344bb58";
 
-const ankrProviderUrl = "https://rpc.ankr.com/avalanche";
+const ankrProviderUrl = "https://api.avax.network/ext/bc/C/rpc";
 
 const getProvider = () => {
   return new ethers.providers.JsonRpcProvider(ankrProviderUrl);
