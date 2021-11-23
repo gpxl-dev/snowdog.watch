@@ -142,6 +142,13 @@ const App: React.FC = () => {
               />
             </Card>
           </div>
+          <a
+            href="https://traderjoexyz.com/#/trade?inputCurrency=0x130966628846bfd36ff31a822705796e8cb8c18d&outputCurrency=0xdE9E52F1838951e4d2bb6C59723B003c353979b6"
+            className="block w-full p-8 text-center text-xl font-bold text-white bg-sdogBlue rounded mt-8 active:bg-blue-800 transition-colors"
+            target="_blank"
+          >
+            Buy SDOG
+          </a>
           {simulationMode && (
             <button
               className="w-full p-8 text-xl font-bold text-white bg-sdogBlue rounded mt-8 active:bg-blue-800 transition-colors"
