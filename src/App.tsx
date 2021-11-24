@@ -92,18 +92,17 @@ const App: React.FC = () => {
               text={<DollarValue value={scenario.sdogPrice} />}
             />
           </Card>
-          {simulationMode && !scenario.sdogBought.eq(0) && (
+          {simulationMode && scenario.sdogSold.toFixed(0) === "0" && (
             <p className="mt-4 text-sdogBlue opacity-80 italic text-sm">
               To achieve this price,{" "}
               {addCommas(
-                scenario.sdogBought
+                scenario.sdogSold
                   .dividedBy(10 ** 9)
                   .abs()
                   .toFixed(0)
               )}{" "}
               SDOG would need to be{" "}
-              {scenario.sdogBought.lt(0) ? "sold " : "bought "} before the
-              buyback
+              {scenario.sdogSold.lt(0) ? "bought " : "sold "} before the buyback
             </p>
           )}
         </Card>
