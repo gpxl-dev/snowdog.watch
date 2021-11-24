@@ -23,7 +23,6 @@
   .gridContainer {
     grid-template-areas:
       "header header"
-      "warning warning"
       "treasury currentPrice"
       "treasury buybackImpact"
       "liquidity buybackImpact"
@@ -52,9 +51,6 @@
   }
   .area-liquidity {
     grid-area: liquidity;
-  }
-  .area-warning {
-    grid-area: warning;
   }
 
   .inlineInput {
