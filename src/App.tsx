@@ -60,6 +60,19 @@ const App: React.FC = () => {
             />
           </div>
         </header>
+        <div className="area-warning bg-yellow-400 text-white p-6 rounded">
+          <h2 className="text-xl font-bold mb-2">
+            Important notice (24th Nov)
+          </h2>
+          <p>
+            It appears that funds are now being removed from the treasury by the
+            team and sent to the DAO multisig in preparation for the buyback. As
+            a result, the "current" numbers listed are now innaccurate. We
+            recommend turning on 'simulation mode' above and increasing the
+            treasury % to reach approximately $45-50m buyback power for a more
+            accurate estimate.
+          </p>
+        </div>
         <Card className="area-currentPrice">
           <div className="flex flex-row justify-between flex-wrap items-center mb-4">
             <h2 className="text-xl font-bold">
