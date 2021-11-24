@@ -42,10 +42,19 @@ const useScenario = (
       setNumBuybacks,
     };
 
+  const poolInvariant = state.reserves["sdog-mim"]![0].multipliedBy(
+    state.reserves["sdog-mim"]![1]
+  );
   const newPrice = state.tokenPricesInMim.sdog.multipliedBy(priceModifier);
+  const newSdogReservesForNewPrice = poolInvariant
+    .dividedBy(newPrice.multipliedBy(10 ** 9))
+    .squareRoot();
+  const newMimReservesForNewPrice = poolInvariant.dividedBy(
+    newSdogReservesForNewPrice
+  );
   const newTreasuryValue = treasuryValue.multipliedBy(treasuryValueModifier);
   // MIM value = SDOG value
-  const oldLPValue = state.reserves["sdog-mim"][1].multipliedBy(2);
+  const oldLPValue = newMimReservesForNewPrice.multipliedBy(2);
   const newLPValue = oldLPValue.multipliedBy(lpSizeModifier);
   const newMimReserves = newLPValue.dividedBy(2);
   // mim / sdog = price || sdog * price = mim || sdog = mim / price
