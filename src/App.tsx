@@ -23,6 +23,7 @@ import useScenario from "./hooks/useScenario";
 import ToggleSwitch from "./components/ToggleSwitch";
 import classNames from "classnames";
 import ShareModal from "./components/ShareModal";
+import { addCommas } from "./utils/addCommas";
 
 const logos: Record<TREASURY_TOKENS, string> = {
   avax: avaxLogo,
@@ -91,6 +92,20 @@ const App: React.FC = () => {
               text={<DollarValue value={scenario.sdogPrice} />}
             />
           </Card>
+          {simulationMode && !scenario.sdogBought.eq(0) && (
+            <p className="mt-4 text-sdogBlue opacity-80 italic text-sm">
+              To achieve this price,{" "}
+              {addCommas(
+                scenario.sdogBought
+                  .dividedBy(10 ** 9)
+                  .abs()
+                  .toFixed(0)
+              )}{" "}
+              SDOG would need to be{" "}
+              {scenario.sdogBought.lt(0) ? "sold " : "bought "} before the
+              buyback
+            </p>
+          )}
         </Card>
 
         <Card
@@ -294,7 +309,7 @@ const App: React.FC = () => {
                   type="number"
                   className="inlineInput"
                 />
-                % from its current value to:
+                % from current value to:
               </p>
             )}
             <div className="flex flex-row  text-lg justify-between">
@@ -305,6 +320,17 @@ const App: React.FC = () => {
                 />
               </span>
             </div>
+            {simulationMode && (
+              <p className="mt-4 text-sdogBlue opacity-80 italic text-sm">
+                <b className="font-bold">NOTE:</b> The treasury value above is
+                calculated by assuming the price you have selected has been
+                reached by current holders selling SDOG to the pool. Adjusting
+                the value modifier is essentially simulating people adding or
+                removing liquidity from the Trader Joe pool. At the time of
+                publishing (end of day 6), SDOG owns &gt;99% of the LP, so a
+                negative value here is very unlikely
+              </p>
+            )}
           </div>
         </Card>
 

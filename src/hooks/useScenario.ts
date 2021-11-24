@@ -40,6 +40,7 @@ const useScenario = (
       setTreasuryValueIncrease,
       setLpSizeIncrease,
       setNumBuybacks,
+      sdogBought: new BigNumber(0),
     };
 
   const poolInvariant = state.reserves["sdog-mim"]![0].multipliedBy(
@@ -49,6 +50,9 @@ const useScenario = (
   const newSdogReservesForNewPrice = poolInvariant
     .dividedBy(newPrice.multipliedBy(10 ** 9))
     .squareRoot();
+  const sdogBought = newSdogReservesForNewPrice.minus(
+    state.reserves["sdog-mim"][0]
+  );
   const newMimReservesForNewPrice = poolInvariant.dividedBy(
     newSdogReservesForNewPrice
   );
@@ -88,6 +92,7 @@ const useScenario = (
     setTreasuryValueIncrease,
     setLpSizeIncrease,
     setNumBuybacks,
+    sdogBought,
   };
 };
 
